@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<configuration debug="false"  xmlns="http://ch.qos.logback/xml/ns/logback"
+               xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+               xsi:schemaLocation="http://ch.qos.logback/xml/ns/logback
+                https://raw.githubusercontent.com/enricopulatzo/logback-XSD/master/src/main/xsd/logback.xsd">
+
+    <appender name="STOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>
+                %date{HH:mm:ss.SSS} %cyan([%thread]) %yellow(%-5level) %green(%logger{100}).%boldRed(%method)-%boldMagenta(%line) - %blue(%msg%n)
+            </pattern>
+
+        </encoder>
+    </appender>
+    <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/app/logs/ezs/ezs.log</file>
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>   <!--过滤掉error的级别-->
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+
+        <encoder>
+            <pattern>
+                %d{HH:mm:ss.SSS} [%thread] %-5level %logger{100}.%method-%line - %msg%n
+            </pattern>
+
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/ezs-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>/app/logs/ezs/error.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>  <!--//打印error-->
+        </filter>
+        <encoder>
+            <pattern>
+                %d{HH:mm:ss.SSS} [%thread] %-5level %logger{100}.%method-%line - %msg%n
+            </pattern>
+        </encoder>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>logs/error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+            <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                <maxFileSize>10MB</maxFileSize>
+            </timeBasedFileNamingAndTriggeringPolicy>
+        </rollingPolicy>
+    </appender>
+
+    <!-- additivity:false 禁止重复打印日志 -->
+
+    <!-- 让SpringBoot内部日志ERROR级别 减少日志输出 -->
+    <logger name="org.springframework" level="ERROR" additivity="false">
+        <appender-ref ref="STOUT"/>
+    </logger>
+
+    <!-- 让mybatis整合包日志ERROR 减少日志输出 -->
+    <logger name="org.mybatis" level="ERROR" additivity="false">
+        <appender-ref ref="STOUT"/>
+    </logger>
+
+    <!-- 让ibatis 日志ERROR 减少日志输出 -->
+    <logger name="org.apache.ibatis" level="ERROR" additivity="false">
+        <appender-ref ref="STOUT"/>
+    </logger>
+
+    <!-- 让 tomcat包打印日志 日志ERROR 减少日志输出 -->
+    <logger name="org.apache" level="ERROR" additivity="false">
+        <appender-ref ref="STOUT"/>
+    </logger>
+
+
+
+    <logger name="com.baomidou" level="ERROR" additivity="false">
+        <appender-ref ref="STOUT"/>
+    </logger>
+
+    <logger name="com.zaxxer" level="ERROR" additivity="false">
+        <appender-ref ref="STOUT"/>
+    </logger>
+
+    <!-- Activiti日志 -->
+    <logger name="org.activiti" level="ERROR" />
+    <logger name="org.activiti.engine.impl.persistence.entity" level="DEBUG" />
+    <logger name="_org.springframework" level="ERROR" />
+    <logger name="springfox.documentation" level="ERROR" />
+
+    <!-- root级别开debug 子目录根据需要关闭 -->
+    <root level="DEBUG">
+        <appender-ref ref="STOUT"/>
+        <appender-ref ref="FILE"/>
+        <appender-ref ref="FILE_ERROR"/>
+
+    </root>
+</configuration>
