@@ -38,17 +38,21 @@ public class MpGenerator {
                 .packageConfig(builder -> {
                     builder.parent("com.gpt806") // 设置父包名
                             .moduleName("ezs") // 设置父包模块名
-                            .mapper("dao")
-                            .pathInfo(Collections.singletonMap(OutputFile.xml, projectPath + "/src/main/resources/mapper")); // 设置mapperXml生成路径
+                            .mapper("dao.sys")
+                            .entity("entity.sys") // 设置实体类包名
+                            .service("service.sys") // 设置Service接口包名
+                            .serviceImpl("service.impl.sys") // 设置Service实现类包名
+                            .controller("controller.sys") // 设置Controller类的包名为controller.sys
+                            .pathInfo(Collections.singletonMap(OutputFile.xml, projectPath + "/src/main/resources/mapper/sys")); // 设置mapperXml生成路径
                 })
-
+                
                 .strategyConfig(builder -> {
-                    builder.addInclude("t_test") // 设置需要生成的表名
-                            .addTablePrefix("t_", "c_")
+                    builder.addInclude("s_sys_permission","s_sys_role","s_sys_role_permission","s_sys_user","s_sys_user_role") // 设置需要生成的表名
+                            .addTablePrefix("t_", "c_", "s_")
                             .entityBuilder()
                             .enableTableFieldAnnotation()
                             .enableLombok()
-                            .naming(NamingStrategy.no_change)
+                            .naming(NamingStrategy.underline_to_camel)
                             .columnNaming(NamingStrategy.underline_to_camel)
                             .superClass(BaseEntity.class)
                             .addSuperEntityColumns("id","create_by","create_time","update_by","update_time","uid","is_delete")
