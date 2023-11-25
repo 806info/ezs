@@ -54,7 +54,7 @@ knife4j:
     swagger-model-name: 实体类列表
 
 mybatis-plus:
-  mapper-locations: classpath:mapper/*Mapper.xml
+  mapper-locations: classpath:mapper/**/*.xml
   type-aliases-package: com.gpt806.ezs.entity
   global-config:
     db-config:
