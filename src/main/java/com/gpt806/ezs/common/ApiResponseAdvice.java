@@ -30,8 +30,8 @@ public class ApiResponseAdvice implements ResponseBodyAdvice<Object> {
     public Object beforeBodyWrite(Object body, MethodParameter returnType, MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType, ServerHttpRequest request, ServerHttpResponse response) {
         // 针对String类型的特殊处理，因为Spring默认将String视为直接的响应体
         if (body instanceof String) {
-            return JSONUtil.toJsonStr(new ApiResponse<>(HttpStatus.OK.value(), "Success", body));
+            return JSONUtil.toJsonStr(new ApiResponse<>(ResultEnum.SUCCESS.getCode(), "Success", body));
         }
-        return new ApiResponse<>(HttpStatus.OK.value(), "Success", body);
+        return new ApiResponse<>(ResultEnum.SUCCESS.getCode(), "Success", body);
     }
 }

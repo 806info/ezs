@@ -6,8 +6,7 @@ import com.gpt806.ezs.base.BaseEntity;
 import java.io.Serializable;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 /**
  * <p>
@@ -15,10 +14,13 @@ import lombok.Setter;
  * </p>
  *
  * @author Herb
- * @since 2023-11-25
+ * @since 2023-11-30
  */
 @Getter
 @Setter
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @TableName("s_sys_user")
 @ApiModel(value = "SysUser对象", description = "")
 public class SysUser extends BaseEntity {
@@ -39,4 +41,14 @@ public class SysUser extends BaseEntity {
 
     @TableField("email")
     private String email;
+
+    @TableField("status")
+    private Integer status;
+
+    @TableField("dept_id")
+    private Integer deptId;
+
+    @TableField("description")
+    private String description;
+
 }

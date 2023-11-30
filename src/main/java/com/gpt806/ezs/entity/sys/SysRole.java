@@ -15,7 +15,7 @@ import lombok.Setter;
  * </p>
  *
  * @author Herb
- * @since 2023-11-25
+ * @since 2023-11-30
  */
 @Getter
 @Setter
@@ -30,4 +30,10 @@ public class SysRole extends BaseEntity {
 
     @TableField("description")
     private String description;
+
+    @TableField("type")
+    private Integer type;
+
+    @TableField("status")
+    private Integer status;
 }

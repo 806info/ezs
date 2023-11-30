@@ -6,11 +6,24 @@ spring:
 
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-#    driver-class-name: com.p6spy.engine.spy.P6SpyDriver
     password: 123456
-    url: jdbc:mysql://127.0.0.1:3310/ezs?useSSL=false&useUnicode=true&characterEncoding=utf-8
-#    url: jdbc:p6spy:mysql://127.0.0.1:3310/ezs?useSSL=false&useUnicode=true&characterEncoding=utf-8
+    url: jdbc:mysql://127.0.0.1:3310/ezs?useSSL=false&useUnicode=true&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
     username: root
+    type: com.alibaba.druid.pool.DruidDataSource
+  data:
+    redis:
+      host: localhost
+      #host: 192.168.3.8
+      port: 6379
+      password: shiyuesoft
+      database: 0
+      timeout: 200000
+      jedis:
+        pool:
+          max-active: 128
+          max-wait: -1
+          max-idle: 128
+          min-idle: 0
   jackson:
     date-format: yyyy-MM-dd HH:mm:ss
     time-zone: GMT+8
@@ -63,3 +76,11 @@ mybatis-plus:
       logic-not-delete-value: 0 # 逻辑未删除值(默认为 0)
   configuration:
     log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+
+#application:
+#  security:
+#    jwt:
+#      secret-key: 404E635266556A586E3272357538782F413F4428472B4B6250645367566B5970
+#      expiration: 86400000 # a day
+#      refresh-token:
+#        expiration: 604800000 # 7 days

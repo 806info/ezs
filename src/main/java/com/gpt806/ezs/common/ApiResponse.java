@@ -22,4 +22,16 @@ public class ApiResponse<T>  implements Serializable {
     @ApiModelProperty("返回体")
     private T data;
 
+    public ApiResponse(T value) {
+        this.data = value;
+    }
+
+
+    public static <T> ApiResponse<T> success(T data) {
+        return new ApiResponse<>(ResultEnum.SUCCESS.getCode(), ResultEnum.SUCCESS.getMessage(), data);
+    }
+    public static <T> ApiResponse<T> result(ResultEnum resultEnum) {
+        return new ApiResponse<>(resultEnum.getCode(), resultEnum.getMessage(), null);
+    }
+
 }

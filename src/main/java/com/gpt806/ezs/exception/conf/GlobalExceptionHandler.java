@@ -2,6 +2,8 @@ package com.gpt806.ezs.exception.conf;
 
 import cn.hutool.json.JSONUtil;
 import com.gpt806.ezs.common.ApiResponse;
+import com.gpt806.ezs.common.ResultEnum;
+import com.gpt806.ezs.exception.exc.ParamException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +42,17 @@ public class GlobalExceptionHandler {
         String requestURI = request.getRequestURI();
         log.error("请求地址 {},不支持 {} 请求", requestURI, e.getMethod());
         return new ApiResponse<>(HttpStatus.METHOD_NOT_ALLOWED.value(), e.getMessage(), null);
+    }
+
+    @ExceptionHandler(ParamException.class)
+    public void paramExceptions(RuntimeException e, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String requestURI = request.getRequestURI();
+        log.error("请求地址 {},异常: {}", requestURI, e);
+        log.info("走这里...2");
+
+        response.setContentType("application/json;charset=UTF-8");
+        response.setStatus(200);
+        response.getWriter().write(JSONUtil.toJsonStr(new ApiResponse<>(ResultEnum.PARAM_ERROR.getCode(), e.getMessage(), null)));
     }
 
     /**

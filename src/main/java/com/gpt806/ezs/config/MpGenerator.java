@@ -47,7 +47,7 @@ public class MpGenerator {
                 })
                 
                 .strategyConfig(builder -> {
-                    builder.addInclude("s_sys_permission","s_sys_role","s_sys_role_permission","s_sys_user","s_sys_user_role") // 设置需要生成的表名
+                    builder.addInclude("s_sys_acl","s_sys_acl_module","s_sys_dept","s_sys_log","s_sys_role","s_sys_role_acl","s_sys_user","s_sys_user_role") // 设置需要生成的表名
                             .addTablePrefix("t_", "c_", "s_")
                             .entityBuilder()
                             .enableTableFieldAnnotation()
